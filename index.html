@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    #new-task {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    #add-btn {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #add-btn:hover {
+      background-color: #45a049;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 6px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📝 To-Do List</h2>
+
+    <input id="new-task" type="text" placeholder="Add a new task..." />
+    <button id="add-btn">Add Task</button>
+
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    // Get references to HTML elements
+    const newTaskInput = document.getElementById("new-task");
+    const addBtn = document.getElementById("add-btn");
+    const taskList = document.getElementById("task-list");
+
+    // When "Add Task" button is clicked
+    addBtn.addEventListener("click", addTask);
+
+    // Also allow pressing Enter to add
+    newTaskInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        addTask();
+      }
+    });
+
+    // Function to add a task
+    function addTask() {
+      const text = newTaskInput.value.trim();
+      if (text === "") {
+        alert("Please write something!");
+        return;
+      }
+
+      // Create new <li> for task
+      const li = document.createElement("li");
+      li.textContent = text;
+
+      // Toggle completion when clicked
+      li.addEventListener("click", function() {
+        li.classList.toggle("completed");
+      });
+
+      // Add delete button
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "❌";
+      delBtn.className = "delete-btn";
+      delBtn.addEventListener("click", function() {
+        li.remove();
+      });
+
+      // Add delete button inside <li>
+      li.appendChild(delBtn);
+
+      // Add <li> to the <ul>
+      taskList.appendChild(li);
+
+      // Clear input box
+      newTaskInput.value = "";
+    }
+  </script>
+</body>
+</html>
